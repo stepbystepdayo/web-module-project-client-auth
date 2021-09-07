@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import friendsData from "../data";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import FriendsForm from "./FriendsForm";
 
 const Friends = (props) => {
   // const { friendsData } = props;
@@ -24,10 +25,22 @@ const Friends = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const addFriend = (friend) => {
+    //データをfriendからAPIに入れる
+    axiosWithAuth()
+      .post("friends", friend)
+      .then((res) => {
+        console.log(res);
+        getFriends();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       <h1>hahah</h1>
       <div>
+        <FriendsForm addFriend={addFriend} />
         {friends.map((friend) => (
           <Container key={friend.id}>
             <h2>My Name is {friend.name}</h2>
